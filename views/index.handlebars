@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-3 text-center">Burgers to Devour</div>
+		<div class="col-sm-2"></div>
+		<div class="col-sm-3 text-center">Devoured Burgers</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<hr>
+	
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-3 text-center">
+		{{#each burgers}}
+			{{#unless this.devoured}}
+			<div class="row">
+				<div class="col-sm-12 text-margin">
+					{{burger_name}}
+				</div>
+			</div>
+			{{/unless}}
+		{{/each}}
+		</div>
+		<div class="col-sm-2">
+		{{#each burgers}}
+			{{#unless this.devoured}}
+			<div class="row">
+				<div class="col-sm-12">
+					<button class="btn btn-primary center-block button-margins devour" data-burger_id="{{id}}">Devour</button>
+				</div>
+			</div>
+			{{/unless}}
+		{{/each}}
+		</div>
+		<div class="col-sm-3 text-center">
+			{{#each burgers}}
+			{{#if this.devoured}}
+			<div class="row">
+				<div class="col-sm-12 text-margin greyed-out-text">
+					<s>{{burger_name}}</s>
+				</div>
+			</div>
+			{{/if}}
+		{{/each}}
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+	<div class="row" style="min-height: 30px"></div>
+</div>

@@ -1,0 +1,23 @@
+.jumbotron {
+    background-color: #b3e5fc !important;
+}
+
+body {
+    background-color: #fff8e1;
+}
+
+.button-margins {
+    margin: 3px auto;
+}
+
+.text-margin {
+    margin: 12px auto;
+}
+
+.greyed-out-text {
+    color: grey;
+}
+
+textarea {
+    text-align: center;
+}

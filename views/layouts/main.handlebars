@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/yeti/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/burger_style.css">
+    <title>Burger App</title>
+</head>
+
+<body>
+
+	<div class="jumbotron">
+    	<h1 class="text-center">Eat the Burger!</h1> 
+    	<img class="center-block" src="/img/burger.png" alt="burger_pic">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4">
+					<div class="form">
+   		 				<div class="form-group">
+    						<label for="burger_input"></label>
+    						<textarea class="form-control" id="burger_input" rows="3"></textarea>
+  		  				</div>
+    				</div>
+  				</div>
+  				<div class="col-sm-4"></div>
+  			</div>
+
+  			<div class="row">
+  				<div class="col-sm-4"></div>
+  				<div class="col-sm-4">
+  					<button type="button" class="btn btn-primary center-block" id="submit">Submit Burger</button>
+  				</div>
+  				<div class="col-sm-4"></div>
+  			</div>
+  		</div>
+  	</div>
+
+  	<div class="modal fade" id="myModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+		    	<div class="modal-header">
+		        	<h5 class="modal-title">Warning</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          		<span aria-hidden="true">&times;</span>
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		        	<p>You must enter a burger name</p>
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+		</div>
+	</div>
+
+    {{{body}}}
+
+    <script
+  		src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  		crossorigin="anonymous">
+  	</script>
+
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+
+      // Triggers a click of the submit button when enter is pressed on the keyboard.
+    	$(document).keypress(function(e) {
+    		if(e.which == 13) {
+        		$('#submit').trigger('click');
+    		}
+		  });
+
+      // When the submit button is clicked, the code checks to make sure the user entered something in the 
+      // text area. If not, a model is displayed and a request is not sent. If there was any input in the text
+      // area, the input is trimmed and placed in a newBurger object then the request is sent with this data. 
+      // once the response comes back from the server, the page is refreshed.
+    	$('#submit').on('click', function() {
+    		if ($('#burger_input').val() === '') {
+    			$("#myModal").modal('show');
+    		} else {
+    			var newBurger = {
+    				burger_name: $('#burger_input').val().trim(),
+    			};
+
+    			$.post('/', newBurger, function(status){
+    				if (status === 'success') {
+    					window.location.href='/';	
+    				}
+    			});
+    		}
+    	});
+
+      // When one of the devour buttons is clicked, a PUT AJAX request is sent to the server, then the page is refreshed.
+    	$('.devour').on('click', function() {
+		    $.ajax({
+		    	type: 'PUT', 
+		   		dataType: 'json', 
+		    	url: "/" + $(this).data("burger_id")
+		    });
+   			window.location.href='/';
+		});
+    </script>
+
+</body>
+
+</html>
