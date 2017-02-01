@@ -4,10 +4,8 @@ var exphbs = require("express-handlebars");
 var bodyParser = require('body-parser');
 var PORT = process.env.PORT || 3000;
 
-// Starts listening on localhost:3000 or the enviromental port.
-app.listen(PORT, function() {
-    console.log('Listening on port: ' + PORT);
-});
+// Requiring our models for syncing
+var db = require("./models");
 
 // Looks at available engines and sets the view engine to Handlebars.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -22,3 +20,10 @@ app.use(express.static(__dirname + '/public/assets'));
 // to use these routes.
 var routes = require("./controllers/burgers_controller.js");
 app.use("/", routes);
+
+// Syncing our sequelize models and then starting our express app
+db.sequelize.sync().then(function() {
+    app.listen(PORT, function() {
+        console.log('Listening on port: ' + PORT);
+    });
+});

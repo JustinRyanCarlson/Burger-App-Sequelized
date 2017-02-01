@@ -1,27 +1,35 @@
 var express = require("express");
 var router = express.Router();
-var burgers = require("../models/burgers.js");
+var db = require("../models");
 
-// GET route at the root that calls the burgers.read function in burgers.js and passes in
-// a callback. The callback will be ran in burgers.js and is used to render the .handlebars
-// files with the burger data from the database.
+// GET route at the root that calls the findAll Sequelize function to get all
+// the data back from the database. This data is then used in the rendering of
+// the page using Handlebars.
 router.get("/", function(req, res) {
-    burgers.read(function(data) {
+    db.burgers.findAll({}).then(function(data) {
         res.render('index.handlebars', { burgers: data });
     });
 });
 
-// Post route at the root that calls the burgers.create function in burgers.js and passes in
-// the data the user entered. Once that function is ran, the server sends a response of 'success'.
+// Post route at the root that calls the create Sequelize function and creates a new burger record
+// from the name the user entered. Once the promise is returned from this function, the success
+// message is sent back as a response.
 router.post("/", function(req, res) {
-    burgers.create(req.body.burger_name);
-    res.send('success');
+    db.burgers.create({
+        burger_name: req.body.burger_name
+    }).then(function() {
+        res.send('success');
+    });
 });
 
 // Put route that has a place holder for the burger id that is going to be updated. Calls the
-// burgers.update function in burgers.js and passes in the id to be updated.
+// update Sequelize function and updates the devoured column for the selected record to 1 (true).
 router.put("/:id", function(req, res) {
-    burgers.update(req.params.id);
+    db.burgers.update({ devoured: 1 }, {
+        where: {
+            id: req.params.id
+        }
+    });
 });
 
 
