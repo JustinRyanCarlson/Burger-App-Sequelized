@@ -1,7 +1,7 @@
 # Eat the Burger Sequelized
 
 ## About
-This is the same application as Eat the Burger ([Link to repo](https://github.com/JustinRyanCarlson/Burger-App)) with Sequelize ORM replacing the raw SQL creation and queries.
+This is the same application as Eat the Burger ([Link to repo](https://github.com/JustinRyanCarlson/Burger-App)) with Sequelize ORM replacing the raw SQL database/table creation and queries.
 
 ### Local Installation and Use
 1. Clone this repo to your local machine.
