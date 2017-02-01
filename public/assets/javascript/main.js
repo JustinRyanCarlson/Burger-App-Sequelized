@@ -17,7 +17,7 @@ $('#submit').on('click', function() {
             burger_name: $('#burger_input').val().trim(),
         };
 
-        $.post('/', newBurger, function(status) {
+        $.post('/burgers', newBurger, function(status) {
             if (status === 'success') {
                 window.location.href = '/';
             }
@@ -30,7 +30,7 @@ $('.devour').on('click', function() {
     $.ajax({
         type: 'PUT',
         dataType: 'json',
-        url: "/" + $(this).data("burger_id")
+        url: "/burgers/" + $(this).data("burger_id")
     });
     window.location.href = '/';
 });
